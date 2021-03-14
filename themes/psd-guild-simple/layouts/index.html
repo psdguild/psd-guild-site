@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;" charset="utf-8" >
+    <meta name="viewport" charset="UTF-8" content="width=device-width, initial-scale=1">
+    <title>PSD Guild</title>
+    <!-- stylesheets -->
+    <link rel="stylesheet" href="/clearstyle.css">
+    <link rel="stylesheet" href="/style.css">
+    <!-- external fonts -->
+
+    <!-- lazy load -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lozad/dist/lozad.min.js"></script>
+  </head>
+  <body>
+    <div id="hidden-grid" class="grid">
+      <div class="col-reference">
+
+      </div>
+    </div>
+    <div class="grid">
+      <div id="header" class="wide">
+        <!-- <p><strong>PSD Guild</strong> is a <span class="jitter">new</span> student-led design studio.</p> -->
+        <h2><span><span id="psd"></span><strong>Guild</strong></span>  <span>is a</span>  <span>new</span>  <span>student-led</span>  <span>design practice.</span></h2>
+        <h2 class="links"><span class="jitter" id="learn-more">🔎 <a>Learn more</a></span> <span class="jitter">✉️ <a href="mailto:guild.psd@gmail.com">Get in touch</a></span></h2>
+      </div>
+      <div class="reg">
+        <h2 class="jitter">Some of our work:</h2>
+      </div>
+      <div id="reg-reference" class="reg"></div>
+      {{ $c := 0 }}
+      {{ range (where .Site.RegularPages ".Type" "project").ByDate }}
+        <!-- <hr> -->
+        <p class="reg item{{ $c }} proj-head">{{ .Title }}</p>
+        <div class="empty full">
+          <div class="arrows">
+            <svg class="arrow" data-dir="bck">
+              <line class="line" x1="100%" x2="0%" y1="0%" y2="50%"></line>
+              <line class="line" x1="0%" x2="100%" y1="50%" y2="100%"></line>
+            </svg>
+            <svg class="arrow" data-dir="fwd">
+              <line class="line" x1="0%" x2="100%" y1="0%" y2="50%"></line>
+              <line class="line" x1="100%" x2="0%" y1="50%" y2="100%"></line>
+            </svg>
+          </div>
+        </div>
+        <div class="stream full item{{ $c }}">
+          {{ $mediacount:=0 }}
+          {{ range $item := .Params.media }}
+            {{$url := index $item "file"}}
+            {{$image := resources.Get $url}}
+            {{$filetype := $image.MediaType }}
+
+            <div class="media-wrapper" data-count="{{$mediacount}}">
+              {{if or (eq (string $filetype) "image/png") (eq (string $filetype) "image/jpeg")}}
+                {{$image := $image.Resize "1000x"}}
+                {{$width:=float $image.Width}}
+                {{$height:=float $image.Height}}
+                {{$ratio:=div $height $width}}
+                <img class="lozad" src="{{ $image.RelPermalink }}" alt="">
+                {{if eq $c 0 }}
+                  <div class="aspect-ratio" style="padding-bottom:{{ mul $ratio 100}}%;"></div>
+                {{end}}
+                <div class="drag-cover"></div>
+              {{else}}
+                {{$webm := strings.Replace $image.Name "mp4" "webm"}}
+                {{$webm := resources.Get $webm}}
+                <video class='lozad' autoplay loop muted playsinline >
+                  <source src="{{ $webm.RelPermalink }}" type="video/webm">
+                  <source src="{{ $image.RelPermalink }}" type="video/mp4">
+                </video>
+              {{end}}
+              <h3>{{$item.type}} | {{$item.author}}</h3>
+
+            </div>
+            {{$mediacount = add $mediacount 1 }}
+          {{ end }}
+        </div>
+        {{$c = println $c 1 }}
+      {{ end }}
+
+      <div class="reg" id="about"><h2 class="jitter">About us:</h2></div>
+      <div class="cut">
+        <p>PSD Guild is a group of design students at <a target="_blank" href="https://www.newschool.edu/parsons/">Parsons</a> that collaborate on client projects across a wide range of disciplines. We work with people and groups within and beyond The New School community.</p>
+      </div>
+      <div id="peeps" class="reg">
+        {{ range (where .Site.RegularPages ".Type" "person").ByDate }}
+          {{if not (eq .Params.photo "")}}
+            {{$url := .Params.photo}}
+            {{$url = print "people/" $url}}
+            {{$thumb := resources.Get $url}}
+            {{$thumbtype := $thumb.MediaType }}
+            {{ if or (eq (string $thumbtype) "image/png") (eq (string $thumbtype) "image/jpeg") }}
+              {{$thumb = $thumb.Resize "500x"}}
+              {{$thumb = $thumb | images.Filter (images.Grayscale) }}
+            {{end}}
+            <a class="person jitter" href="{{ .Params.link }}" target="_blank">
+              <img src="{{$thumb.RelPermalink}}" alt="">
+              <h3>{{.Params.name}}</h3>
+            </a>
+          {{end}}
+
+
+
+        {{end}}
+      </div>
+      <div class="reg" id="footer">
+      </div>
+    </div>
+    <script src="/smoothscroll.min.js" charset="utf-8"></script>
+    <script src="/function.js" charset="utf-8"></script>
+    <!-- <a href="https://www.ceciliazhang.work/" target="_blank">Cecilia</a>, <a target="_blank" href="https://www.karissamunaf.com/">Karissa</a>, <a href="https://docs.google.com/presentation/d/1HFVbCyMgifSH6Sr_TIUk6QPwYhMFOfaccCEXkhkVecM/edit?usp=sharing">Sarah</a>, <a href="https://nicochilla.com/">Nico</a>, <a href="https://stephaniecui.com/">Stephanie</a>, and <a href="https://patrick-y-m.com/" >Patrick</a>. -->
+  </body>
+</html>
