@@ -1,7 +1,7 @@
 {
   "title": "Penguinese",
   "date": "2021-03-03T22:47:09-08:00",
-  "draft": true,
+  "draft": false,
   "author":false,
   "media":[{
     "file":"works/01-poster-stephanie.png",
