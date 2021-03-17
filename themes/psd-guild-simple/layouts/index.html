@@ -51,16 +51,15 @@
             {{$image := resources.Get $url}}
             {{$filetype := $image.MediaType }}
 
-            <div class="media-wrapper" data-count="{{$mediacount}}">
+            <div class="media-wrapper" data-count="{{$mediacount}}" data-type="{{ string $filetype }}">
               {{if or (eq (string $filetype) "image/png") (eq (string $filetype) "image/jpeg")}}
                 {{$image := $image.Resize "1000x"}}
                 {{$width:=float $image.Width}}
                 {{$height:=float $image.Height}}
                 {{$ratio:=div $height $width}}
                 <img class="lozad" src="{{ $image.RelPermalink }}" alt="">
-                {{if eq $c 0 }}
-                  <div class="aspect-ratio" style="padding-bottom:{{ mul $ratio 100}}%;"></div>
-                {{end}}
+                <div class="aspect-ratio" style="padding-bottom:{{ mul $ratio 100}}%;"></div>
+
                 <div class="drag-cover"></div>
               {{else}}
                 {{$webm := strings.Replace $image.Name "mp4" "webm"}}
@@ -69,12 +68,14 @@
                   <source src="{{ $webm.RelPermalink }}" type="video/webm">
                   <source src="{{ $image.RelPermalink }}" type="video/mp4">
                 </video>
+                <div class="aspect-ratio"></div>
               {{end}}
               <h3>{{$item.type}} | {{$item.author}}</h3>
 
             </div>
             {{$mediacount = add $mediacount 1 }}
           {{ end }}
+          <div class="end-gap"></div>
         </div>
         {{$c = println $c 1 }}
       {{ end }}
@@ -82,6 +83,7 @@
       <div class="reg" id="about"><h2 class="jitter">About us:</h2></div>
       <div class="cut">
         <p>PSD Guild is a group of design students at <a target="_blank" href="https://www.newschool.edu/parsons/">Parsons</a> that collaborate on client projects across a wide range of disciplines. We work with people and groups within and beyond The New School community.</p>
+        <p>You can find us on <a href="https://www.are.na/psd-guild" target="_blank">Are.na</a> and <a target="_blank" href="https://www.instagram.com/psdguild/">Instagram</a>.</p>
       </div>
       <div id="peeps" class="reg">
         {{ range (where .Site.RegularPages ".Type" "person").ByDate }}
@@ -99,14 +101,13 @@
               <h3>{{.Params.name}}</h3>
             </a>
           {{end}}
-
-
-
         {{end}}
       </div>
       <div class="reg" id="footer">
       </div>
     </div>
+    <!-- <script src="https://unpkg.com/intersection-observer-debugger"></script> -->
+    <script src="/lodash.js" charset="utf-8"></script>
     <script src="/smoothscroll.min.js" charset="utf-8"></script>
     <script src="/function.js" charset="utf-8"></script>
     <!-- <a href="https://www.ceciliazhang.work/" target="_blank">Cecilia</a>, <a target="_blank" href="https://www.karissamunaf.com/">Karissa</a>, <a href="https://docs.google.com/presentation/d/1HFVbCyMgifSH6Sr_TIUk6QPwYhMFOfaccCEXkhkVecM/edit?usp=sharing">Sarah</a>, <a href="https://nicochilla.com/">Nico</a>, <a href="https://stephaniecui.com/">Stephanie</a>, and <a href="https://patrick-y-m.com/" >Patrick</a>. -->
