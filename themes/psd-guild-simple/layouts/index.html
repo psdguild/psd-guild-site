@@ -51,15 +51,16 @@
             {{$image := resources.Get $url}}
             {{$filetype := $image.MediaType }}
 
-            <div class="media-wrapper" data-count="{{$mediacount}}" data-type="{{ string $filetype }}">
+            <div class="media-wrapper noselect" data-count="{{$mediacount}}" data-type="{{ string $filetype }}">
               {{if or (eq (string $filetype) "image/png") (eq (string $filetype) "image/jpeg")}}
-                {{$image := $image.Resize "1000x"}}
                 {{$width:=float $image.Width}}
                 {{$height:=float $image.Height}}
                 {{$ratio:=div $height $width}}
-                <img class="lozad" src="{{ $image.RelPermalink }}" alt="">
+                {{$imagelarge := $image.Resize "1000x"}}
+                {{$imagemed := $image.Resize "700x"}}
+                {{$imagesmol := $image.Resize "600x"}}
+                <img class="lozad" srcset="{{ $imagesmol.RelPermalink }} 700w, {{ $imagelarge.RelPermalink }} 1000w" alt="">
                 <div class="aspect-ratio" style="padding-bottom:{{ mul $ratio 100}}%;"></div>
-
                 <div class="drag-cover"></div>
               {{else}}
                 {{$webm := strings.Replace $image.Name "mp4" "webm"}}
@@ -71,7 +72,7 @@
                 <div class="aspect-ratio"></div>
               {{end}}
               <h3>{{$item.type}} | {{$item.author}}</h3>
-
+              <!-- sizes="(max-width: 700px) 500px, 700px" src=""   -->
             </div>
             {{$mediacount = add $mediacount 1 }}
           {{ end }}
@@ -103,9 +104,10 @@
           {{end}}
         {{end}}
       </div>
-      <div class="reg" id="footer">
+      <p class="reg" id="footer">
+        <span class="jitter">✉️ <a href="mailto:guild.psd@gmail.com">Contact us</a></span>
       </div>
-    </div>
+    </p>
     <!-- <script src="https://unpkg.com/intersection-observer-debugger"></script> -->
     <script src="/lodash.js" charset="utf-8"></script>
     <script src="/smoothscroll.min.js" charset="utf-8"></script>
