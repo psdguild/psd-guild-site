@@ -21,7 +21,19 @@
     <div class="grid">
       <div id="header" class="wide">
         <!-- <p><strong>PSD Guild</strong> is a <span class="jitter">new</span> student-led design studio.</p> -->
-        <h2><span><span id="psd"></span><strong>Guild</strong></span>  <span>is a</span>  <span>new</span>  <span>student-led</span>  <span>design practice.</span></h2>
+        <h2>
+          <span>
+            <span id="psd">
+              <img src="signatures/cecilialogo.png" class="viz" alt="">
+              <img src="signatures/karissalogo.png" alt="">
+              <img src="signatures/nicologo.png" alt="">
+              <img src="signatures/pmaclogo.png" alt="">
+              <img src="signatures/stephlogo.png" alt="">
+            </span>
+            <strong>Guild</strong>
+          </span>
+          <span>is a</span>  <span>new</span>  <span>student-led</span>  <span>design practice.</span>
+        </h2>
         <h2 class="links"><span class="jitter" id="learn-more">🔎 <a>Learn more</a></span> <span class="jitter">✉️ <a href="mailto:guild.psd@gmail.com">Get in touch</a></span></h2>
       </div>
       <div class="reg">
@@ -59,7 +71,7 @@
                 {{$imagelarge := $image.Resize "1000x"}}
                 {{$imagemed := $image.Resize "700x"}}
                 {{$imagesmol := $image.Resize "600x"}}
-                <img class="lozad" srcset="{{ $imagesmol.RelPermalink }} 700w, {{ $imagelarge.RelPermalink }} 1000w" alt="">
+                <img class="lozad" data-srcset="{{ $imagesmol.RelPermalink }} 700w, {{ $imagelarge.RelPermalink }} 1000w" data-src="{{ $imagesmol.RelPermalink }}" alt="">
                 <div class="aspect-ratio" style="padding-bottom:{{ mul $ratio 100}}%;"></div>
                 <div class="drag-cover"></div>
               {{else}}

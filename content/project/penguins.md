@@ -34,12 +34,6 @@
     "author":"Stephanie"
   },
   {
-    "file":"works/06-bookcover-sarah.jpg",
-    "type":"Book cover",
-    "title":"",
-    "author":"Sarah"
-  },
-  {
     "file":"videos/03-wnsr-nico-01.mp4",
     "type":"Podcast website",
     "title":"",
@@ -68,12 +62,6 @@
     "type":"Album art",
     "title":"",
     "author":"Cecilia"
-  },
-  {
-    "file":"works/12-illustration-sarah.png",
-    "type":"Illustration",
-    "title":"",
-    "author":"Sarah"
   },
   {
     "file":"works/13-albumcover-patrick.png",
